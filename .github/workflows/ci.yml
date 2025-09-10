@@ -1,0 +1,69 @@
+name: build spack buildcache
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+  buildcache-linux-x86:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-24.04 ]
+        target: [ x86_64_v2, x86_64_v3 ]
+    runs-on: ${{matrix.os}}
+    permissions:
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Spack
+        uses: spack/setup-spack@v2.1.1
+
+      - name: Install
+        run: spack -e . install --target=${{matrix.target}}
+
+      - name: Run
+        shell: spack-bash {0}
+        run: |
+          spack env activate .
+#          python3 -c 'print("hello world")'
+
+      - name: Push packages and update index
+        env:
+          GITHUB_USER: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: spack -e . buildcache push --base-image ubuntu:22.04 --update-index numpex-buildcache
+        if: ${{ !cancelled() }}
+
+#  buildcache-linux-arm:
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        os: [ ubuntu-24.04-arm ]
+#        target: [ x86_64_v2, x86_64_v3 ]
+#    runs-on: ${{matrix.os}}
+#
+#  buildcache-macos-x86:
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        os: [ macos-13 ]
+#        target: [ m1 ] # m2 ?
+#    runs-on: ${{matrix.os}}
+#
+#  buildcache-macos-arm:
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        os: [ macos-14, macos-15 ]
+#        target: [ m1, m2 ]
+#    runs-on: ${{matrix.os}}
+
