@@ -45,4 +45,4 @@ spack:
         secret_variable: GITHUB_TOKEN
   config:
     install_tree:
-      padded_length: 256
+      padded_length: 512
