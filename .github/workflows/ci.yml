@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configure target architecture
-        run: sed 's/%%SPACK_TARGET%%/${target}/g' spack.yaml.in > spack.yaml
+        run: sed 's/%%SPACK_TARGET%%/${{matrix.target}}/g' spack.yaml.in > spack.yaml
 
       - name: Set up Spack
         uses: spack/setup-spack@v2.1.1
