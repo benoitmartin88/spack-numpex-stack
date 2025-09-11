@@ -7,7 +7,7 @@ spack:
 #  - compilers: [gcc@11.4.0]
 
   concretizer:
-    unify: false
+    unify: true
 #    reuse: false
 #    static_analysis: false
 
@@ -32,6 +32,7 @@ spack:
   - py-bokeh
   - py-matplotlib
   - pdiplugin-trace
+
   view: true
 
   mirrors:
@@ -44,5 +45,4 @@ spack:
         secret_variable: GITHUB_TOKEN
   config:
     install_tree:
-      root: /opt/spack
       padded_length: 128
