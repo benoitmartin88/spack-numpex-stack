@@ -6,6 +6,16 @@ spack:
 #  definitions:
 #  - compilers: [gcc@11.4.0]
 
+  concretizer:
+    unify: false
+#    reuse: false
+#    static_analysis: false
+
+  packages:
+    all:
+      require:
+        - target=%%SPACK_TARGET%%
+
   # add package specs to the `specs` list
   specs:
 #  - $compilers
@@ -23,8 +33,7 @@ spack:
   - py-matplotlib
   - pdiplugin-trace
   view: true
-  concretizer:
-    unify: true
+
   mirrors:
     numpex-buildcache:
       url: oci://ghcr.io/benoitmartin88/spack-numpex-stack
@@ -33,3 +42,7 @@ spack:
       access_pair:
         id_variable: GITHUB_USER
         secret_variable: GITHUB_TOKEN
+  config:
+    install_tree:
+      root: /opt/spack
+      padded_length: 128

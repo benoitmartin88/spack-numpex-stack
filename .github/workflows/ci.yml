@@ -24,6 +24,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Configure target architecture
+        run: sed 's/%%SPACK_TARGET%%/${target}/g' spack.yaml.in > spack.yaml
+
       - name: Set up Spack
         uses: spack/setup-spack@v2.1.1
         with:
@@ -31,6 +34,9 @@ jobs:
           buildcache: true  # Configure oci://ghcr.io/spack/github-actions-buildcache
           color: true       # Force color output (SPACK_COLOR=always)
           path: spack       # Where to clone Spack
+
+      - name: Spec
+        run: spack -e . spec -I
 
       - name: Install
         run: spack -e . install
