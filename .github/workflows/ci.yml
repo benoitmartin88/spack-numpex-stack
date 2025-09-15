@@ -34,8 +34,10 @@ jobs:
           color: true       # Force color output (SPACK_COLOR=always)
           path: spack       # Where to clone Spack
 
-      - name: Spec
-        run: spack -e . spec -I
+      - name: Spec compilers
+        run: |
+          spack compiler find
+          spack compilers
 
       - name: Install
         run: spack -e . install
@@ -58,7 +60,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-24.04-arm ]
-        target: [ zen3, zen4 ]
+        target: [ arm ]
     runs-on: ${{matrix.os}}
     permissions:
       packages: write

@@ -20,7 +20,7 @@ spack:
   specs:
 #  - $compilers
   - cmake
-  - pdi
+  - pdi~fortran
   - pdiplugin-decl-hdf5
   - pdiplugin-mpi
   - pdiplugin-pycall
