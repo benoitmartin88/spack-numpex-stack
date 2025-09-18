@@ -25,13 +25,14 @@ spack:
   - pdiplugin-mpi
   - pdiplugin-pycall
   - pdiplugin-user-code
+  - pdiplugin-trace
+  - pdiplugin-set-value
   - kokkos
   - python
   - py-dask
   - py-distributed
   - py-bokeh
   - py-matplotlib
-  - pdiplugin-trace
 
   view: true
 
